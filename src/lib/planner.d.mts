@@ -1,0 +1,10 @@
+export type PlannerDraft = { version: number; step: number; projectType: string; businessName: string; industry: string; description: string; goal: string; features: string[]; budget: string; timeline: string };
+export const projectTypes: [string, string][];
+export const goals: string[];
+export const features: [string, boolean][];
+export const budgets: string[];
+export const timelines: string[];
+export function emptyDraft(): PlannerDraft;
+export function normalizeDraft(value: unknown): PlannerDraft;
+export function validateStep(draft: PlannerDraft, step: number): Record<string, string>;
+export function generateBrief(draft: PlannerDraft): string;

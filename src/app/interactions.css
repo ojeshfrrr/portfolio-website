@@ -1,0 +1,125 @@
+/* Lenis owns enhanced scrolling; native anchors remain the no-JS fallback. */
+:root {
+  --motion-short: 180ms;
+  --motion-preview: 220ms;
+  --motion-ease: cubic-bezier(.2, .7, .3, 1);
+  --header-height: 100px;
+}
+
+/* Fixed line boxes preserve the original headline layout during its reveal.
+   Text is visible by default, including before hydration and without JS. */
+.hero-line-mask { display: block; }
+.hero-line { display: block; }
+
+html {
+  scrollbar-gutter: stable;
+}
+
+section[id], main[id] {
+  scroll-margin-top: calc(var(--header-height) + 16px - 24px);
+}
+
+
+.text-link {
+  position: relative;
+  transition: color var(--motion-short) var(--motion-ease);
+}
+
+.text-link::after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: calc(100% - 38px);
+  left: 0;
+  bottom: 6px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-short) var(--motion-ease);
+}
+
+.text-link:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+
+.desktop-nav a,
+.footer nav a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 6px;
+  transition: color var(--motion-short), text-decoration-color var(--motion-short);
+}
+
+.desktop-nav a:is(:hover, :focus-visible),
+.footer nav a:is(:hover, :focus-visible) {
+  text-decoration-color: var(--accent);
+  color: var(--text);
+}
+
+.button {
+  transition: background-color var(--motion-short), color var(--motion-short),
+    transform var(--motion-short) var(--motion-ease);
+}
+
+.button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.button:disabled:hover .arrow {
+  transform: none;
+}
+
+.project-preview-link > .preview {
+  transition: transform var(--motion-preview) var(--motion-ease);
+}
+
+.project-preview-link:focus-visible > .preview {
+  transform: translateY(-3px);
+}
+
+/* Touch devices keep the preview steady; the live-project CTA stays visible. */
+@media (hover: hover) and (pointer: fine) {
+  .project-preview-link:hover > .preview {
+    transform: translateY(-3px);
+  }
+}
+
+/* Project frames stay steady during scrolling. Route changes crossfade only
+   the editorial heading, independently of these hover interactions. */
+
+.hero-feature-caption a {
+  transition: background-color var(--motion-short), border-color var(--motion-short);
+}
+
+.hero-feature-caption a:is(:hover, :focus-visible) {
+  background: var(--surface);
+  border-color: var(--muted);
+}
+
+@media (max-width: 800px) {
+  :root { --header-height: 82px; }
+  .mobile-nav {
+    max-height: calc(100dvh - 82px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .mobile-nav a:is(:hover, :focus-visible) {
+    color: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .project-preview-link:is(:hover, :focus-visible) > .preview,
+  .button:not(:disabled):active,
+  a:hover .arrow,
+  button:hover .arrow {
+    transform: none;
+  }
+  .project-visit { transform: none; }
+}

@@ -1,0 +1,279 @@
+/* Uiverse adaptations: nikk7007/nasty-wasp-56 and alexruix/slippery-frog-10.
+   Copyright - 2026 nikk7007 (Nikolas); Copyright - 2026 alexruix (Alex Ruiz).
+   MIT license and source provenance: THIRD_PARTY_NOTICES.md.
+   Remaining link, project, and menu treatments are original MYOVIO CSS. */
+
+/* Transform-only fill; the existing native link/button remains the control. */
+.button.primary {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--accent);
+  color: var(--bg);
+}
+.button.primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-accent-hover);
+  transform: translateX(-101%);
+  transition: transform var(--motion-preview) var(--motion-ease);
+  pointer-events: none;
+}
+.button.primary:not(:disabled):focus-visible::before { transform: translateX(0); }
+.button.primary:disabled::before { transform: translateX(-101%); }
+.button.primary:disabled {
+  background: var(--surface);
+  color: var(--muted);
+  border-color: var(--color-border-control);
+  cursor: not-allowed;
+}
+.edit-brief:disabled { color: var(--muted); cursor: not-allowed; }
+.form-field :is(input, textarea)::placeholder { color: var(--muted); opacity: 1; }
+
+.text-link::after { width: 100%; }
+.text-link:has(.arrow)::after { width: calc(100% - 38px); }
+.arrow { transition: transform var(--motion-short) var(--motion-ease); }
+a:focus-visible .arrow, button:not(:disabled):focus-visible .arrow { transform: translateX(4px); }
+a:focus-visible .arrow-diagonal, button:not(:disabled):focus-visible .arrow-diagonal { transform: translate(3px,-3px); }
+
+/* Keep the image inside a stable frame; reveal the existing case-study link. */
+.project-preview-link { overflow: hidden; border-radius: 3px; }
+.project-preview-link > .project-screenshot { transition: transform var(--motion-preview) var(--motion-ease); }
+.project-preview-link:focus-visible > .project-screenshot { transform: scale(1.015); }
+.project-preview-link:focus-visible .project-visit { opacity: 1; transform: none; }
+.featured-preview:focus-visible { outline-offset: 5px; }
+
+/* Adapted input focus treatment: no floating labels or removed outlines. */
+.form-field :is(input, select, textarea), .manual-copy textarea {
+  transition: border-color var(--motion-short), background-color var(--motion-short);
+  scroll-margin-block: calc(var(--header-height) + 20px);
+}
+.form-field :is(input, select, textarea):focus-visible, .manual-copy textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-color: var(--accent);
+  background: var(--secondary);
+  box-shadow: 0 0 0 5px var(--color-accent-wash);
+}
+.form-field:focus-within label { color: var(--text); }
+.contact-status:not(:empty) { border-left: 2px solid var(--accent); padding-left: 12px; }
+
+.menu-toggle {
+  min-height: 44px;
+  min-width: 0;
+  padding: 10px 2px;
+  gap: 12px;
+  border: 0;
+  border-bottom: 1px solid var(--accent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font: 500 13px/1 var(--body);
+  transition: color var(--motion-short), border-color var(--motion-short);
+}
+.menu-toggle:is(:hover, :focus-visible) {
+  border-color: var(--color-accent-hover);
+  background: transparent;
+  color: var(--text);
+}
+.menu-icon { position: relative; display: block; width: 20px; height: 16px; color: currentColor; }
+.menu-icon > span { position: absolute; left: 0; width: 100%; height: 1.5px; border-radius: 2px; background: currentColor; transition: transform var(--motion-short) var(--motion-ease), opacity var(--motion-short) var(--motion-ease), width var(--motion-short) var(--motion-ease); }
+.menu-icon > span:first-child { top: 1px; transform-origin: left center; }
+.menu-icon > span:nth-child(2) { top: 7px; }
+.menu-icon > span:last-child { top: 13px; transform-origin: left center; }
+.menu-toggle[aria-expanded='true'] .menu-icon > span:first-child { transform: translateX(2px) rotate(42deg); }
+.menu-toggle[aria-expanded='true'] .menu-icon > span:nth-child(2) { width: 0; opacity: 0; }
+.menu-toggle[aria-expanded='true'] .menu-icon > span:last-child { transform: translateX(2px) rotate(-42deg); }
+.menu-toggle[aria-expanded='true'] { border-color: var(--accent); background: transparent; }
+
+/* A fixed presentation stage keeps screenshot switching from moving the page.
+   The original captures remain intact and available at their full dimensions. */
+.capture-stage {
+  height: clamp(310px, 48vw, 720px);
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  place-items: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.capture-image { width: 100%; height: 100%; min-width: 0; min-height: 0; }
+.capture-image > .project-screenshot {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+}
+.capture-mobile .capture-image { max-width: 375px; }
+.capture-mobile.capture-stage { display: flex; justify-content: center; height: auto; padding: clamp(14px, 3vw, 28px); background: transparent; border: 0; }
+.capture-mobile .capture-image { width: min(100%, 375px); height: auto; }
+.capture-mobile .capture-image > .project-screenshot { height: auto; aspect-ratio: auto; object-fit: contain; border: 1px solid var(--border); border-radius: 3px; }
+.project-gallery figcaption { flex-wrap: wrap; align-items: center; }
+.capture-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 5px;
+  transition: color var(--motion-short), text-decoration-color var(--motion-short);
+}
+.capture-open:is(:hover, :focus-visible) { color: var(--accent); text-decoration-color: var(--accent); }
+.capture-note { flex-basis: 100%; }
+.gallery-toolbar button { transition: color var(--motion-short), background-color var(--motion-short), border-color var(--motion-short); }
+
+/* Progressive native disclosure animation: no client state or height measurement.
+   Unsupported browsers keep the existing instant, accessible details behaviour. */
+@supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+  .faq-list details { interpolate-size: allow-keywords; }
+  .faq-list details::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition: block-size var(--motion-preview) var(--motion-ease),
+      content-visibility var(--motion-preview) allow-discrete;
+  }
+  .faq-list details[open]::details-content { block-size: auto; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .capture-image { animation: capture-change var(--motion-short) var(--motion-ease); }
+}
+@keyframes capture-change {
+  from { opacity: .82; }
+  to { opacity: 1; }
+}
+@media (max-width: 540px) {
+  .capture-stage { height: 370px; }
+  .gallery-toolbar { display: grid; justify-content: stretch; gap: 8px; }
+  .gallery-toolbar [role="group"] { width: 100%; flex-wrap: wrap; gap: 2px; }
+  .gallery-toolbar button { padding-inline: 9px; font-size: 11px; }
+  .project-gallery figcaption { align-items: flex-start; gap: 6px; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button.primary:not(:disabled):hover::before { transform: translateX(0); }
+  a:hover .arrow, button:not(:disabled):hover .arrow { transform: translateX(4px); }
+  a:hover .arrow-diagonal, button:not(:disabled):hover .arrow-diagonal { transform: translate(3px,-3px); }
+  .project-preview-link:hover > .project-screenshot { transform: scale(1.015); }
+  .form-field :is(input, select, textarea):not(:focus-visible):hover { border-color: var(--muted); }
+}
+@media (hover: none), (pointer: coarse) {
+  .project-visit { opacity: 1; transform: none; }
+  .button.primary:not(:disabled):active { background: var(--color-accent-hover); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-list details::details-content { transition: none; }
+  .button.primary::before { transition: none; }
+  .menu-icon > span { transition: none; }
+  a:is(:hover, :focus-visible) .arrow,
+  button:is(:hover, :focus-visible) .arrow,
+  .project-preview-link:is(:hover, :focus-visible) > .project-screenshot { transform: none; }
+}
+
+/* One quiet frame on the image itself; presentation wrappers stay unoutlined. */
+.project-visual,
+.project-arcus .project-visual {
+  background: transparent;
+  border: 0;
+}
+.project-preview-link,
+.featured-preview,
+.capture-image {
+  display: block;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-border-strong) 74%, var(--accent) 26%);
+  border-radius: 5px;
+  background: var(--color-background-deep);
+  box-shadow: 0 12px 30px rgb(0 0 0 / 16%);
+}
+.project-preview-link > .project-screenshot,
+.featured-preview > .project-screenshot,
+.capture-image > .project-screenshot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+}
+.capture-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+}
+.capture-image { width: 100%; height: auto; min-width: 0; }
+.capture-image > .project-screenshot { object-fit: contain; }
+.capture-mobile.capture-stage { display: grid; height: auto; padding: 0; border: 0; background: transparent; }
+.capture-mobile .capture-image { width: min(100%, 375px); height: auto; }
+.capture-mobile .capture-image > .project-screenshot { max-width: 100%; height: auto; margin-inline: auto; aspect-ratio: auto; object-fit: contain; }
+.featured-preview { padding: 0; }
+.featured-preview .project-screenshot { border: 0; }
+
+.soundtrack-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  color: var(--muted);
+  background: transparent;
+  font: 500 11px/1 var(--body);
+  transition: color var(--motion-short), border-color var(--motion-short), background-color var(--motion-short);
+}
+.soundtrack-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.soundtrack-toggle:hover,
+.soundtrack-toggle:focus-visible { color: var(--text); border-color: var(--accent); background: var(--color-accent-wash); }
+
+/* Shared finishing details: input feedback, with no new animation lifecycle. */
+.text-link:focus-visible { color: var(--accent); }
+.back-to-top { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.capture-open .arrow, .product-tab-links .arrow, .back-to-top .arrow { width: 16px; height: 16px; }
+.product-tab-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.back-to-top, .contact-email, .edit-brief {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 5px;
+  transition: color var(--motion-short), text-decoration-color var(--motion-short);
+}
+:is(.back-to-top, .contact-email, .edit-brief):not(:disabled):is(:hover, :focus-visible) {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+a:focus-visible .arrow-up { transform: translateY(-3px); }
+.featured-preview, .project-preview-link { transition: border-color var(--motion-short); }
+.featured-preview > .project-screenshot { transition: transform var(--motion-preview) var(--motion-ease); }
+.featured-preview:focus-visible > .project-screenshot { transform: scale(1.015); }
+:is(.featured-preview, .project-preview-link):focus-visible { border-color: var(--accent); }
+.visual-caption, .featured-caption h3 { transition: color var(--motion-short); }
+.project-visual:focus-within .visual-caption,
+.featured-grid article:focus-within .featured-caption h3 { color: var(--text); }
+.faq-list summary { transition: color var(--motion-short); }
+.faq-list summary:focus-visible { color: var(--accent); }
+.gallery-toolbar button:not([aria-pressed='true']):active { background: var(--color-accent-wash); }
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover .arrow-up { transform: translateY(-3px); }
+  :is(.featured-preview, .project-preview-link):hover { border-color: var(--accent); }
+  .featured-preview:hover > .project-screenshot { transform: scale(1.015); }
+  .project-visual:has(.project-preview-link:hover) .visual-caption { color: var(--text); }
+  .featured-grid article:has(.featured-preview:hover) .featured-caption h3 { color: var(--accent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .soundtrack-toggle { transition: none; }
+  a:is(:hover, :focus-visible) .arrow-up,
+  .featured-preview:is(:hover, :focus-visible) > .project-screenshot { transform: none; }
+}

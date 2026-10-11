@@ -1,0 +1,139 @@
+/* OVIO's component motion is independent of the heading-only route crossfade. */
+:root {
+  --motion-content: 320ms;
+  --motion-display: 460ms;
+  --motion-image: 500ms;
+  --motion-spring: cubic-bezier(.22, .85, .28, 1);
+}
+
+/* Fine rules draw under navigation; focus feedback never depends on movement. */
+.desktop-nav a, .desktop-nav a[aria-current='page'], .footer nav a, .case-chapters a, .product-tab-links a { position: relative; text-decoration: none; }
+.desktop-nav a::after, .footer nav a::after, .case-chapters a::after, .product-tab-links a::after {
+  content: ''; position: absolute; inset: auto 0 -5px; height: 1px;
+  background: var(--accent); transform: scaleX(0); transform-origin: right;
+  transition: transform var(--motion-short) var(--motion-ease);
+}
+.desktop-nav a:is(:hover, :focus-visible, [aria-current='page'])::after,
+.footer nav a:is(:hover, :focus-visible)::after,
+.case-chapters a:is(:hover, :focus-visible)::after,
+.product-tab-links a:is(:hover, :focus-visible)::after { transform: scaleX(1); transform-origin: left; }
+.text-link::after { transform-origin: right; }
+.text-link:is(:hover, :focus-visible)::after { transform-origin: left; }
+.wordmark .brand-dot { display: inline-block; transition: transform 220ms var(--motion-spring), color 180ms; }
+.wordmark:is(:hover, :focus-visible) .brand-dot { transform: translateY(-2px) scale(1.12); }
+a .arrow, button .arrow { transition: transform 180ms var(--motion-spring), color 180ms; }
+a:is(:hover, :focus-visible) .arrow, button:is(:hover, :focus-visible) .arrow { transform: translateX(3px); }
+a:is(:hover, :focus-visible) .arrow-diagonal, button:is(:hover, :focus-visible) .arrow-diagonal { transform: translate(2px, -2px); }
+a:is(:hover, :focus-visible) .arrow-up { transform: translateY(-3px); }
+.button { position: relative; isolation: isolate; overflow: hidden; transition: color 180ms, background-color 180ms, border-color 180ms, transform 180ms var(--motion-spring); }
+.button.primary::before {
+  content: ''; pointer-events: none; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(105deg, transparent 20%, rgb(255 244 225 / 18%) 50%, transparent 80%);
+  opacity: 0; translate: calc(var(--pointer-x, 0) * 12%) 0;
+  transition: opacity 180ms, translate 220ms var(--motion-ease);
+}
+.button.primary:is(:hover, :focus-visible)::before { opacity: 1; }
+.button:not(:disabled):active { transform: translateY(1px) scale(.985); }
+.button:disabled { cursor: wait; }
+.edit-brief { transition: color 180ms, opacity 180ms; }
+.soundtrack-toggle, .sculpture-caption .motion-toggle { transition: color 180ms, border-color 180ms, background-color 180ms, transform 180ms var(--motion-spring); }
+.soundtrack-toggle:active, .sculpture-caption .motion-toggle:active { transform: scale(.97); }
+.soundtrack-toggle svg, .sculpture-caption .motion-toggle svg { transition: opacity 180ms, color 180ms; }
+.soundtrack-toggle[aria-pressed='false'] svg { opacity: .6; }
+
+/* Menu presence owns entry/exit; its existing hamburger and scroll lock stay native. */
+.mobile-nav:not([hidden]) { animation: none; }
+.mobile-nav[inert] { pointer-events: none; }
+.mobile-nav:focus-within { clip-path: inset(0) !important; opacity: 1 !important; }
+.mobile-nav a { transition: color 180ms, padding-left 180ms var(--motion-ease); }
+.mobile-nav a:is(:hover, :focus-visible) { padding-left: 6px; }
+@media (max-width: 800px) {
+  .mobile-nav.container {
+    position: absolute; inset: 100% 0 auto; width: 100%; max-width: none;
+    padding-inline: var(--gutter); background: rgb(16 18 20 / 97%);
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+/* Shared-layout selection markers have unique IDs per control group. */
+.device-selector button, .story-controls button, .planner-progress li { position: relative; isolation: isolate; }
+.selection-mark { pointer-events: none; position: absolute; z-index: -1; display: block; }
+.selection-surface { inset: 0; background: var(--surface); border: 1px solid var(--color-border-control); border-radius: 4px; }
+.selection-bar { inset: -2px 0 auto; height: 2px; background: var(--accent); }
+.selection-rail { inset: auto 0 -1px; height: 2px; background: var(--accent); }
+.device-selector button[aria-pressed='true'] { background: transparent; border-color: transparent; }
+.planner-progress li[aria-current='step'] { border-color: var(--border); }
+.device-preview-frame, .story-panel > div, .planner-step { animation: none; }
+.story-controls button .arrow { opacity: .5; }
+.story-controls button[aria-pressed='true'] .arrow { opacity: 1; }
+
+/* A maximum half-degree of perspective: genuine UI stays legible. */
+.featured-preview, .project-preview-link, .story-image, .device-preview-frame {
+  transition: border-color 180ms, transform 220ms var(--motion-spring);
+}
+.featured-caption .arrow, .visual-caption { transition: color 180ms, transform 180ms; }
+.featured-grid article:focus-within .featured-caption .arrow { color: var(--accent); transform: translate(2px, -2px); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :is(.featured-preview, .project-preview-link, .story-image, .device-preview-frame):hover {
+    transform: perspective(1200px) rotateX(calc(var(--pointer-y, 0) * -.45deg)) rotateY(calc(var(--pointer-x, 0) * .65deg));
+    border-color: var(--accent);
+  }
+  .featured-grid article:hover .featured-caption .arrow { color: var(--accent); transform: translate(2px, -2px); }
+  .featured-preview:is(:hover, :focus-visible) > .project-screenshot { transform: none; }
+  .service-offers article:hover h2, .case-features article:hover h3, .principles article:hover h2 { color: var(--accent); }
+}
+.service-offers h2, .case-features h3, .principles h2 { transition: color 180ms; }
+.editorial-process li { position: relative; }
+.editorial-process li::before {
+  content: ''; position: absolute; top: -1px; left: 0; width: min(180px, 35%); height: 1px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--motion-display) var(--motion-ease);
+}
+.editorial-process li[data-motion-entered='true']::before { transform: scaleX(1); }
+
+/* Selection follows real native checked/focus states, including touch and keyboard. */
+.planner-choice { transition: background-color 180ms, border-color 180ms, box-shadow 180ms, transform 180ms var(--motion-spring); }
+.planner-choice:has(input:checked) { box-shadow: inset 3px 0 0 var(--accent); }
+.planner-choice:active { transform: scale(.99); }
+.planner-choice strong, .planner-choice small { transition: color 180ms; }
+.planner-choice:has(input:checked) strong { color: var(--text); }
+.form-field input, .form-field textarea, .form-field select { transition: border-color 180ms, background-color 180ms, box-shadow 180ms; }
+.form-field:focus-within label { color: var(--text); }
+.form-field label { transition: color 180ms; }
+.form-field :is(input, textarea, select):focus { box-shadow: inset 2px 0 0 var(--accent); }
+.form-field :is(input, textarea, select)[aria-invalid='true'] { border-color: var(--accent); }
+.brief-progress li { transition: color 180ms, border-color 180ms; }
+.brief-form[data-delivery-state='sending'] .brief-actions .primary { position: relative; }
+.brief-form[data-delivery-state='sending'] .brief-actions .primary::after {
+  content: ''; position: absolute; bottom: 0; left: 0; height: 2px; width: 30%; background: currentColor;
+  animation: delivery-pending 900ms ease-in-out infinite alternate;
+}
+@keyframes delivery-pending { from { translate: 0; } to { translate: 230%; } }
+.brief-form[data-delivery-state='accepted'] .brief-review > h2 { color: var(--accent); transition: color 180ms; }
+
+/* Progressive enhancement: native details remains usable in older browsers. */
+@supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+  :is(.faq-list, .case-notes, .brief-form, .planner-panel) details { interpolate-size: allow-keywords; }
+  :is(.faq-list, .case-notes, .brief-form, .planner-panel) details::details-content {
+    block-size: 0; overflow: clip;
+    transition: block-size 220ms var(--motion-ease), content-visibility 220ms allow-discrete;
+  }
+  :is(.faq-list, .case-notes, .brief-form, .planner-panel) details[open]::details-content { block-size: auto; }
+}
+.faq-list summary > span { transition: transform 180ms var(--motion-spring); }
+.faq-list details[open] summary > span { transform: rotate(45deg); }
+summary { transition: color 180ms; }
+summary:is(:hover, :focus-visible) { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav { opacity: 1 !important; clip-path: inset(0) !important; }
+  .mobile-nav[inert] { opacity: 0 !important; }
+  .mobile-nav > div, .selection-mark { transform: none !important; }
+  .editorial-process li::before { transform: scaleX(1); }
+  .wordmark:is(:hover, :focus-visible) .brand-dot,
+  a:is(:hover, :focus-visible) .arrow, button:is(:hover, :focus-visible) .arrow,
+  .button:not(:disabled):active, .planner-choice:active,
+  .soundtrack-toggle:active, .sculpture-caption .motion-toggle:active,
+  .featured-grid article:is(:hover, :focus-within) .featured-caption .arrow { transform: none; }
+  .mobile-nav a:is(:hover, :focus-visible) { padding-left: 0; }
+}

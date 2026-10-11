@@ -1,0 +1,32 @@
+:root {
+  --route-crossfade-duration: 220ms;
+  --route-crossfade-ease: cubic-bezier(.25, .1, .25, 1);
+  /* Keep the actual background and navigation live underneath title snapshots. */
+  view-transition-name: none;
+}
+::view-transition { pointer-events: none; }
+::view-transition-group(ovio-heading) {
+  animation: none;
+}
+::view-transition-image-pair(ovio-heading) { isolation: isolate; }
+::view-transition-old(ovio-heading),
+::view-transition-new(ovio-heading) {
+  mix-blend-mode: normal;
+  width: auto;
+  height: auto;
+  animation-duration: var(--route-crossfade-duration);
+  animation-timing-function: var(--route-crossfade-ease);
+  animation-fill-mode: both;
+}
+::view-transition-old(ovio-heading) { animation-name: ovio-heading-out; }
+::view-transition-new(ovio-heading) { animation-name: ovio-heading-in; }
+@keyframes ovio-heading-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes ovio-heading-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(ovio-heading),
+  ::view-transition-old(ovio-heading),
+  ::view-transition-new(ovio-heading) {
+    animation-duration: 0s;
+    animation-delay: 0s;
+  }
+}

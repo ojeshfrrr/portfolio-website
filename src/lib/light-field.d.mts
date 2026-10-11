@@ -1,0 +1,1 @@
+export function deformLightPoint<T extends { x: number; y: number; z: number }>(out: T, x: number, y: number, z: number, lane: number, time: number, pointerX: number, pointerY: number, strength: number): T;

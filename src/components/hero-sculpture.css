@@ -1,0 +1,46 @@
+.sculpture-feature { padding-top: 0; }
+.sculpture-stage { position: relative; width: 100%; aspect-ratio: 1.08; overflow: hidden; background: transparent; }
+.sculpture-artwork { display: block; width: 100%; height: 100%; overflow: visible; mix-blend-mode: screen; opacity: .78; }
+.sculpture-canvas { position: absolute; inset: 0; touch-action: pan-y; pointer-events: none; }
+.sculpture-canvas canvas { display: block; touch-action: pan-y; }
+.sculpture-caption > audio { display: none; }
+.sculpture-caption { border-top: 1px solid var(--border); padding-top: 12px; color: var(--muted); }
+.sculpture-motion-caption { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 38px; font-size: 12px; }
+.sculpture-motion-caption .soundtrack-credit { flex: 0 1 auto; color: var(--muted); font-size: 10px; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.sculpture-motion-caption .soundtrack-credit:hover { color: var(--text); }
+.sculpture-caption .motion-toggle { color: var(--text); background: transparent; border: 0; display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 6px 2px 6px 8px; font-size: 12px; transition: color .2s ease; }
+.sculpture-caption .motion-toggle:hover { color: var(--accent); }
+.sculpture-caption .motion-toggle svg { display: block; width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+.sculpture-caption button:focus-visible, .sculpture-caption a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* Mobile is a single composition: readable copy above a shallow light field.
+   The controlled overlap puts the visual behind the lower content, while its
+   controls stay in document flow. No viewport-height or section overflow hack. */
+@media (max-width: 800px) {
+  .hero { padding-top: 22px; }
+  .hero-kicker { gap: 12px; font-size: 11px; line-height: 1.5; }
+  .hero-kicker .little-cross { font-size: 27px; line-height: 1; }
+  .hero-grid { position: relative; isolation: isolate; gap: 0; padding-block: 24px 24px; }
+  .hero-copy { position: relative; z-index: 1; }
+  .hero h1 { font-size: clamp(42px, 12.2vw, 76px); letter-spacing: -.055em; line-height: 1.06; }
+  .hero-description { max-width: 39ch; margin-top: 20px; font-size: 14px; line-height: 1.65; }
+  .hero-actions { margin-top: 20px; gap: 8px 20px; }
+  .hero-actions .button { min-height: 48px; padding: 12px 18px; gap: 22px; font-size: 13px; }
+  .hero-actions .text-link { font-size: 13px; gap: 12px; }
+  .hero-feature.sculpture-feature { position: relative; z-index: 0; width: 100%; max-width: 620px; margin: -18px auto 0; }
+  .sculpture-stage { height: clamp(210px, 51vw, 300px); aspect-ratio: auto; mask-image: linear-gradient(to bottom, transparent, black 15%, black 90%, transparent); }
+  .sculpture-caption { padding-top: 8px; }
+  .sculpture-motion-caption { min-height: 36px; gap: 12px; font-size: 11px; }
+  .sculpture-motion-caption > span { max-width: 23ch; line-height: 1.45; }
+  .sculpture-caption .motion-toggle { flex-shrink: 0; gap: 8px; font-size: 12px; }
+  .hero + .home-intro { flex-direction: column; align-items: flex-start; gap: 12px; padding-block: 24px; }
+}
+@media (max-width: 430px) {
+  .hero-location { display: none; }
+  .hero-actions { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .hero-feature.sculpture-feature { margin-top: -26px; }
+  .sculpture-motion-caption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; }
+  .sculpture-motion-caption > span { grid-column: 1; max-width: 24ch; font-size: 10px; }
+  .sculpture-motion-caption .soundtrack-credit { grid-column: 1; grid-row: 2; font-size: 9px; }
+  .sculpture-motion-caption .soundtrack-toggle { grid-column: 2; grid-row: 1; justify-self: end; }
+  .sculpture-motion-caption .motion-toggle { grid-column: 2; grid-row: 2; justify-self: end; }
+}
