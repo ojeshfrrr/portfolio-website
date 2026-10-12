@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { stepDampedSpring } from '../src/app/lab/lab-physics.mjs';
+import { sampleRadialImpulse, stepDampedSpring } from '../src/app/lab/lab-physics.mjs';
 
 const spring = (mass = 1, stiffness = 64, damping = 12) => ({ mass, stiffness, damping });
+const wave = { mass: 1.4, stiffness: 16, damping: 2.8, rippleSpeed: 1, influenceRadius: 150, wavelength: 180, frequency: 1.1, waveDecay: 0.3, momentumPersistence: 0.82 };
 
 test('spring acceleration follows stiffness and mass rather than a decorative multiplier', () => {
   const light = { position: 10, velocity: 0 };
@@ -34,4 +35,17 @@ test('spring integration caps long frames and remains finite under stiff setting
   stepDampedSpring(state, -18, 3, spring(0.5, 180, 2));
   assert.ok(Number.isFinite(state.position) && Number.isFinite(state.velocity));
   assert.ok(Math.abs(state.position) <= 24 && Math.abs(state.velocity) <= 720);
+});
+
+test('radial impulse propagates, depends on force, mass, stiffness, and dissipates', () => {
+  const nearFront = sampleRadialImpulse(100, 1.4, 20, wave);
+  const lowForce = sampleRadialImpulse(100, 1.4, 10, wave);
+  const heavy = sampleRadialImpulse(100, 1.4, 20, { ...wave, mass: 2.8 });
+  const stiff = sampleRadialImpulse(100, 1.4, 20, { ...wave, stiffness: 36 });
+  const late = sampleRadialImpulse(100, 4, 20, wave);
+  assert.notEqual(nearFront, 0);
+  assert.ok(Math.abs(lowForce) < Math.abs(nearFront));
+  assert.ok(Math.abs(heavy) < Math.abs(nearFront));
+  assert.notEqual(stiff, nearFront);
+  assert.ok(Math.abs(late) < Math.abs(nearFront));
 });
