@@ -44,6 +44,16 @@
 .case-notes details { border-block: 1px solid var(--border); margin-top: 24px; padding-block: 16px; }
 .case-notes summary { cursor: pointer; font-size: 14px; padding-block: 8px; }
 .case-notes details p { margin-top: 16px; }
+.case-notes .verification-disclosure { border-block: 1px solid var(--border); margin-top: 24px; padding-block: 16px; }
+.case-notes .verification-disclosure__trigger { display: inline-flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; border: 0; padding: 8px 0; background: transparent; color: var(--text); text-align: left; font: 500 14px/1.5 var(--body); transition: color 180ms; }
+.case-notes .verification-disclosure__trigger:hover { color: var(--accent); }
+.case-notes .verification-disclosure__indicator { width: 14px; height: 14px; flex: 0 0 14px; color: var(--accent); transition: transform 210ms var(--motion-ease); }
+.case-notes .verification-disclosure[data-open="true"] .verification-disclosure__indicator { transform: rotate(180deg); }
+.case-notes .verification-disclosure__panel { display: grid; grid-template-rows: 0fr; opacity: 0; transform: translateY(-3px); transition: grid-template-rows 220ms var(--motion-ease), opacity 180ms var(--motion-ease), transform 220ms var(--motion-ease); }
+.case-notes .verification-disclosure[data-open="true"] .verification-disclosure__panel { grid-template-rows: 1fr; opacity: 1; transform: translateY(0); }
+.case-notes .verification-disclosure__inner { min-height: 0; overflow: hidden; }
+.case-notes .verification-disclosure__copy { margin: 16px 0 0; }
+@media (prefers-reduced-motion: reduce) { .case-notes .verification-disclosure__indicator, .case-notes .verification-disclosure__panel { transition: none; } }
 .case-notes .text-link { margin-top: 18px; }
 @media (max-width: 1000px) { .portfolio-list .project, .portfolio-list .project-arcus { grid-template-columns: 1fr; gap: 28px; } .portfolio-list .project-arcus .project-visual { order: 0; } .portfolio-list .project-information { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; } }
 @media (max-width: 800px) { .story-layout, .case-arcus .story-layout { grid-template-columns: 1fr; gap: 22px; } .case-arcus .story-controls { order: 0; } .story-controls { flex-direction: row; gap: 20px; } .story-controls button { flex: 1; font-size: 16px; border-bottom: 1px solid var(--border); padding-block: 16px; } .case-arcus .case-title { grid-template-columns: 1fr 1fr; } .story-description { min-height: 160px; } }

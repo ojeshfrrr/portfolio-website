@@ -34,6 +34,7 @@ export default function SiteMotion() {
       group.dataset.motionEntered = 'true';
       const candidates = [group, ...group.querySelectorAll<HTMLElement>(`${contentTargets}, ${imageTargets}`)];
       const targets = candidates.filter(element => {
+        if (element.closest('.verification-disclosure')) return false;
         if (element.closest('.hero') || element.matches('h1') || element.closest('[hidden]')) return false;
         if (!element.getClientRects().length) return false;
         if (element === group && element.matches('li')) return false;

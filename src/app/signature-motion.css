@@ -119,6 +119,7 @@ a:is(:hover, :focus-visible) .arrow-up { transform: translateY(-3px); }
     transition: block-size 220ms var(--motion-ease), content-visibility 220ms allow-discrete;
   }
   :is(.faq-list, .case-notes, .brief-form, .planner-panel) details[open]::details-content { block-size: auto; }
+
 }
 .faq-list summary > span { transition: transform 180ms var(--motion-spring); }
 .faq-list details[open] summary > span { transform: rotate(45deg); }
