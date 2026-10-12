@@ -24,7 +24,7 @@ export const site = {
 export const hasEmail = Boolean(emailDraftUrl(site.email, ''));
 export const navLinks = [
   { label: 'Home', href: '/' }, { label: 'Work', href: '/work' },
-  { label: 'Services', href: '/services' }, { label: 'Process', href: '/process' },
+  { label: 'Lab', href: '/lab' }, { label: 'Services', href: '/services' }, { label: 'Process', href: '/process' },
   { label: 'About', href: '/about' }, { label: 'Contact', href: '/contact' },
 ];
 export type Project = { id: 'rewatch' | 'arcus'; name: string; category: string; description: string; details: string[]; url: string; caption: string };
@@ -36,4 +36,4 @@ export const projects: Project[] = [
     description: 'A training product for planning sessions, logging workouts, and reviewing progress, with a public community feed for workout inspiration.',
     details: ['Workout logging', 'Training programs', 'Progress views'], url: 'https://thearcus.vercel.app/', caption: 'A training experience built around the next session.' },
 ];
-export const pagePaths = ['/', '/start', '/work', '/work/rewatch', '/work/arcus', '/services', '/process', '/about', '/contact'];
+export const pagePaths = ['/', '/start', '/work', '/work/rewatch', '/work/arcus', '/lab', '/services', '/process', '/about', '/contact'];
