@@ -152,7 +152,10 @@ export default function HomeSceneBackground() {
       canvas.width = width;
       canvas.height = height;
       context.viewport(0, 0, width, height);
-      if (!isMoving()) draw(0);
+      // Resizing a WebGL drawing buffer clears it. Paint the current frame
+      // immediately so layout changes (including an expanding disclosure)
+      // never expose the cleared buffer while the next animation frame waits.
+      draw(elapsedTime);
     };
 
     // Keep the ambient backdrop moving whenever the page is visible. The foreground
