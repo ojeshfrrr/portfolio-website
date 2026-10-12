@@ -18,6 +18,7 @@ import './pages.css';
 import './ui-polish.css';
 import './route-transitions.css';
 import './signature-motion.css';
+import './typography.css';
 
 export const metadata: Metadata = {
   title: 'OVIO — Websites and products that just work.',
