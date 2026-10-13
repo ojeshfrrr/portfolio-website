@@ -30,7 +30,7 @@ CONTACT_FROM_EMAIL=
 Local configuration can change; confirm the required values are set in `.env.local` without printing or committing secret values. Email drafts and manual copy remain functional fallbacks. No real delivery has been verified.
 
 ## Optional WhatsApp contact
-No verified public business WhatsApp number is configured locally. To enable the contextual WhatsApp link, set `NEXT_PUBLIC_WHATSAPP_NUMBER` to the studio's public business number in international format, including its country code.
+No verified public business WhatsApp number is configured locally. To enable the contextual WhatsApp link, set `NEXT_PUBLIC_WHATSAPP_NUMBER` to the studio's public business number in international format, including its country code. The link is rendered only when the setting contains a valid 8–15 digit number; leave it blank until the number is confirmed.
 
 ## Validation and delivery behavior
 Server checks origin, JSON content type, streamed body size (32KB), field types, field lengths, allowed project types/goals/features and the actual honeypot. Required fields are name, email, project type and description; additional answers are optional. Email is plain text so submitted content cannot become executable HTML. No enquiry database or input logs are added.
