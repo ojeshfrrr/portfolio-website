@@ -29,3 +29,14 @@ test('sitemap includes only configured public page URLs and excludes the interac
   assert.equal(new Set(result.map(({ url }) => url)).size, result.length);
 });
 
+test('robots keep public pages crawlable without a domain and disallow API routes', () => {
+  assert.deepEqual(buildRobots(), { rules: { userAgent: '*', allow: '/', disallow: '/api/' } });
+  assert.deepEqual(buildRobots('https://portfolio.example'), {
+    rules: { userAgent: '*', allow: '/', disallow: '/api/' },
+    sitemap: 'https://portfolio.example/sitemap.xml',
+  });
+  assert.deepEqual(buildRobots('https://portfolio.example', true), { rules: { userAgent: '*', disallow: '/' } });
+  assert.equal(isPreviewDeployment('preview'), true);
+  assert.equal(isPreviewDeployment('production'), false);
+});
+
