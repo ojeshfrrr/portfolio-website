@@ -6,6 +6,7 @@ import '@fontsource/space-grotesk/latin-500.css';
 import '@fontsource/space-grotesk/latin-600.css';
 import { brand } from '../lib/brand';
 import { site } from '../lib/site';
+import { buildSocialUrls } from '../lib/seo-config.mjs';
 import SmoothScroll from '../components/SmoothScroll';
 import SiteMotion from '../components/SiteMotion';
 import HomeSceneBackground from '../components/HomeSceneBackground';
@@ -20,14 +21,18 @@ import './route-transitions.css';
 import './signature-motion.css';
 import './typography.css';
 
+const homeSocialUrls = buildSocialUrls(site.url, '/');
+
 export const metadata: Metadata = {
   title: { default: 'OVIO — Websites and products that just work.', template: '%s | OVIO' },
   description: site.description,
-  metadataBase: new URL(site.url || 'http://127.0.0.1:3000'),
-  ...(site.url ? { alternates: { canonical: '/' } } : {}),
-  robots: site.indexable ? { index: true, follow: true } : { index: false, follow: false },
-  openGraph: { title: 'OVIO — Independent digital studio', description: site.description, type: 'website', siteName: 'OVIO', images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'OVIO — Websites and products that just work.' }], ...(site.url ? { url: site.url } : {}) },
-  twitter: { card: 'summary_large_image', title: 'OVIO — Independent digital studio', description: site.description, images: ['/opengraph-image'] },
+  ...(site.url ? { metadataBase: new URL(site.url), alternates: { canonical: homeSocialUrls?.canonical } } : {}),
+  ...(site.previewDeployment ? { robots: { index: false, follow: false } } : { robots: { index: true, follow: true } }),
+  openGraph: {
+    title: 'OVIO — Independent digital studio', description: site.description, type: 'website', siteName: 'OVIO',
+    ...(homeSocialUrls ? { url: homeSocialUrls.page, images: [{ url: homeSocialUrls.image, width: 1200, height: 630, alt: 'OVIO — Websites and products that just work.' }] } : {}),
+  },
+  twitter: { card: 'summary_large_image', title: 'OVIO — Independent digital studio', description: site.description, ...(homeSocialUrls ? { images: [homeSocialUrls.image] } : {}) },
 };
 export const viewport: Viewport = { themeColor: brand.background, colorScheme: 'dark' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
