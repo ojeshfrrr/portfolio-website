@@ -8,6 +8,7 @@ const questions = [
   ['Can you improve an existing website?', 'Yes. Existing-site work begins with a review of the current site and the access available. We agree on a bounded set of improvements and note platform limitations before quoting.'],
   ['Who owns the finished website and source code?', 'The proposal sets out ownership, source-code delivery, and handover before work begins. Third-party services, fonts, and open-source packages remain subject to their own licences and terms.'],
   ['Is ongoing support available?', 'Maintenance and support are not assumed to be included. If you need updates after launch, ask during scoping so the responsibilities and any separate arrangement can be agreed.'],
+  ['What happens after I send an enquiry?', 'I review the brief and get back to you to discuss fit, open questions, and possible scope.'],
 ];
 
 export default function FAQ() {
