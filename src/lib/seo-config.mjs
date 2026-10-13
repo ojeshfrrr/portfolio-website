@@ -30,3 +30,24 @@ export const sitemapPaths = Object.freeze([
   '/contact',
 ]);
 
+export function buildSitemap(origin, paths = sitemapPaths, preview = false) {
+  if (!origin || preview) return [];
+  return paths.map((path) => ({ url: new URL(path, origin).href }));
+}
+
+export function buildRobots(origin, preview = false) {
+  if (preview) return { rules: { userAgent: '*', disallow: '/' } };
+  return {
+    rules: { userAgent: '*', allow: '/', disallow: '/api/' },
+    ...(origin ? { sitemap: new URL('/sitemap.xml', origin).href } : {}),
+  };
+}
+
+export function buildSocialUrls(origin, path = '/') {
+  if (!origin) return undefined;
+  return {
+    canonical: new URL(path, origin).href,
+    page: new URL(path, origin).href,
+    image: new URL('/opengraph-image', origin).href,
+  };
+}
