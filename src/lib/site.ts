@@ -9,7 +9,6 @@ export const site = {
   name: 'OVIO',
   description: 'Independent digital studio designing and building thoughtful websites, landing pages, and functional web applications. Websites and products that just work.',
   url: siteUrl,
-  indexable: Boolean(siteUrl && !previewDeployment),
   previewDeployment,
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || 'workwithovio@gmail.com',
   contactFormEnabled: process.env.NEXT_PUBLIC_CONTACT_FORM_ENABLED === 'true',
@@ -32,6 +31,4 @@ export const projects: Project[] = [
     description: 'A training product for planning sessions, logging workouts, and reviewing progress, with a public community feed for workout inspiration.',
     details: ['Workout logging', 'Training programs', 'Progress views'], url: 'https://thearcus.vercel.app/', caption: 'A training experience built around the next session.' },
 ];
-export const pagePaths = ['/', '/start', '/work', '/work/rewatch', '/work/arcus', '/lab', '/services', '/process', '/about', '/contact'];
-
 export { sitemapPaths };
