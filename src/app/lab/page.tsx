@@ -2,11 +2,13 @@ import type { Metadata } from 'next';
 import PageHeading from '../../components/PageHeading';
 import LabExperience from './LabExperience';
 import styles from './lab.module.css';
+import { pageMetadata } from '../../lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'OVIO Lab — Seven interactive generative studies',
-  description: 'Explore seven live creative-coding studies in light, kinetic type, signal, gravity, wave interference, particle flow, and reaction diffusion.',
-};
+export const metadata: Metadata = pageMetadata(
+  'Seven interactive generative studies',
+  'Explore seven live creative-coding studies in light, kinetic type, signal, gravity, wave interference, particle flow, and reaction diffusion.',
+  '/lab',
+);
 
 export default function LabPage() {
   return <div className={`${styles.page} container`}>
