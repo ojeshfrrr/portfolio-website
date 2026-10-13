@@ -17,3 +17,15 @@ test('public origin accepts only a verified HTTPS origin', () => {
   }
 });
 
+test('sitemap includes only configured public page URLs and excludes the interactive planner', () => {
+  assert.deepEqual(sitemapPaths, ['/', '/work', '/work/rewatch', '/work/arcus', '/lab', '/services', '/process', '/about', '/contact']);
+  assert.ok(!sitemapPaths.includes('/start'));
+  assert.deepEqual(buildSitemap(undefined), []);
+  assert.deepEqual(buildSitemap('https://portfolio.example', sitemapPaths, true), []);
+  const result = buildSitemap('https://portfolio.example');
+  assert.equal(result.length, 9);
+  assert.deepEqual(result[0], { url: 'https://portfolio.example/' });
+  assert.ok(result.every(({ url }) => url.startsWith('https://portfolio.example/')));
+  assert.equal(new Set(result.map(({ url }) => url)).size, result.length);
+});
+
