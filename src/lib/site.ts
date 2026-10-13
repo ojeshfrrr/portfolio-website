@@ -1,15 +1,9 @@
 import { emailDraftUrl, whatsappUrl } from './contact.mjs';
+import { resolvePublicOrigin } from './seo-config.mjs';
 
 // Public business details only. Never put provider keys in NEXT_PUBLIC variables.
 const candidateUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-function productionUrl() {
-  if (!candidateUrl) return undefined;
-  try {
-    const url = new URL(candidateUrl);
-    return url.protocol === 'https:' && !url.username && !url.password ? url.origin : undefined;
-  } catch { return undefined; }
-}
-const siteUrl = productionUrl();
+const siteUrl = resolvePublicOrigin(candidateUrl);
 export const site = {
   name: 'OVIO',
   description: 'Independent digital studio designing and building thoughtful websites, landing pages, and functional web applications. Websites and products that just work.',
