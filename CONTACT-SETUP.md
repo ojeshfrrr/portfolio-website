@@ -27,7 +27,7 @@ CONTACT_FROM_EMAIL=
 5. Set NEXT_PUBLIC_CONTACT_FORM_ENABLED=true after configuring the sender and key. Restart `npm run dev` or redeploy so public variables are rebuilt.
 6. Send one controlled test enquiry. Check Resend's delivery event and the actual Gmail inbox (including spam). Provider acceptance is not proof of inbox receipt. No response-time promise is configured.
 
-Local configuration can change; confirm the required values are set in `.env.local`. Email drafts and manual copy remain functional fallbacks. No real delivery has been verified.
+Local configuration can change; confirm the required values are set in `.env.local` without printing or committing secret values. Email drafts and manual copy remain functional fallbacks. No real delivery has been verified.
 
 ## Validation and delivery behavior
 Server checks origin, JSON content type, streamed body size (32KB), field types, field lengths, allowed project types/goals/features and the actual honeypot. Required fields are name, email, project type and description; additional answers are optional. Email is plain text so submitted content cannot become executable HTML. No enquiry database or input logs are added.
