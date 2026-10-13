@@ -168,6 +168,7 @@
 .brief-review h2 { font-size:32px; letter-spacing:-1px; scroll-margin-top:calc(var(--header-height) + 20px); }
 .brief-review > p { color:var(--muted); font-size:13px; margin-top:16px; }
 .brief-error-summary { border-left:2px solid var(--accent); margin-top:20px; padding:12px 14px; }
+.brief-error-summary ul { margin:8px 0 0; padding-left:20px; }
 .brief-review dl { margin-block:25px; }
 .brief-review dl > div { display:grid; grid-template-columns:140px 1fr; gap:18px; padding-block:12px; border-bottom:1px solid var(--border); }
 .brief-review dt { color:var(--muted); font-size:12px; }
