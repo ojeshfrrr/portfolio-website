@@ -117,7 +117,7 @@ export default function ProjectPlanner() {
                 ['Budget & timing', `${draft.budget}\n${draft.timeline}`, 3],
               ].map(([label, value, step]) => <section key={label}><div><h3>{label}</h3><button type="button" className="edit-brief" aria-label={`Edit ${label}`} onClick={() => edit(Number(step))}>Edit</button></div><p>{value}</p></section>)}</div>
               <p className="planner-note">All features need an agreed scope. This brief is not a quote, confirmed schedule, or submitted enquiry. Complex features and e-commerce need additional scoping.</p>
-              <p className="planner-note">Next, add your contact details and review the complete enquiry on the Contact page.</p>
+              <p className="planner-note">Next, add your contact details and review the complete enquiry on the Contact page. Nothing is sent until you choose an email action.</p>
               <div className="planner-review-actions"><button type="button" className="button primary" onClick={handoff}>Continue to contact <Arrow/></button><button type="button" className="button planner-secondary" onClick={copy}>Copy project brief</button></div>
               <details className="manual-copy"><summary>Copy manually</summary><label htmlFor="planner-brief">Generated project brief</label><textarea id="planner-brief" value={brief} readOnly rows={12} data-lenis-prevent onFocus={event => event.currentTarget.select()}/></details>
             </>}
