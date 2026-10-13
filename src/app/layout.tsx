@@ -21,7 +21,7 @@ import './signature-motion.css';
 import './typography.css';
 
 export const metadata: Metadata = {
-  title: 'OVIO — Websites and products that just work.',
+  title: { default: 'OVIO — Websites and products that just work.', template: '%s | OVIO' },
   description: site.description,
   metadataBase: new URL(site.url || 'http://127.0.0.1:3000'),
   ...(site.url ? { alternates: { canonical: '/' } } : {}),
