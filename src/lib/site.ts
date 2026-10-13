@@ -1,14 +1,16 @@
 import { emailDraftUrl, whatsappUrl } from './contact.mjs';
-import { resolvePublicOrigin } from './seo-config.mjs';
+import { isPreviewDeployment, resolvePublicOrigin, sitemapPaths } from './seo-config.mjs';
 
 // Public business details only. Never put provider keys in NEXT_PUBLIC variables.
 const candidateUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 const siteUrl = resolvePublicOrigin(candidateUrl);
+const previewDeployment = isPreviewDeployment(process.env.VERCEL_ENV);
 export const site = {
   name: 'OVIO',
   description: 'Independent digital studio designing and building thoughtful websites, landing pages, and functional web applications. Websites and products that just work.',
   url: siteUrl,
-  indexable: Boolean(siteUrl && process.env.VERCEL_ENV !== 'preview' && process.env.VERCEL_ENV !== 'development'),
+  indexable: Boolean(siteUrl && !previewDeployment),
+  previewDeployment,
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || 'workwithovio@gmail.com',
   contactFormEnabled: process.env.NEXT_PUBLIC_CONTACT_FORM_ENABLED === 'true',
   whatsapp: whatsappUrl(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || ''),
@@ -31,3 +33,5 @@ export const projects: Project[] = [
     details: ['Workout logging', 'Training programs', 'Progress views'], url: 'https://thearcus.vercel.app/', caption: 'A training experience built around the next session.' },
 ];
 export const pagePaths = ['/', '/start', '/work', '/work/rewatch', '/work/arcus', '/lab', '/services', '/process', '/about', '/contact'];
+
+export { sitemapPaths };
