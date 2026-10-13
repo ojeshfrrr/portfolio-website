@@ -83,6 +83,7 @@ export default function Contact() {
     if (inFlight.current || !review) return;
     inFlight.current = true;
     setBusy(true);
+    setStatus('Sending your project brief…');
     try {
       if (site.contactFormEnabled) {
         const body = JSON.stringify(review);
