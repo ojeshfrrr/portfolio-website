@@ -40,3 +40,11 @@ test('robots keep public pages crawlable without a domain and disallow API route
   assert.equal(isPreviewDeployment('production'), false);
 });
 
+test('social URLs are omitted until a public origin is configured', () => {
+  assert.equal(buildSocialUrls(undefined, '/work'), undefined);
+  assert.deepEqual(buildSocialUrls('https://portfolio.example', '/work/rewatch'), {
+    canonical: 'https://portfolio.example/work/rewatch',
+    page: 'https://portfolio.example/work/rewatch',
+    image: 'https://portfolio.example/opengraph-image',
+  });
+});
