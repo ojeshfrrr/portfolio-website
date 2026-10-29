@@ -13,6 +13,7 @@ export const metadata = pageMetadata(
 
 const offers = [
   {
+    id: 'landing-pages',
     title: 'Landing pages',
     position: 'One offer, one clear next step',
     description: 'A focused presentation for an offer, campaign, or product, shaped around one useful visitor action.',
@@ -25,6 +26,7 @@ const offers = [
     cta: 'Plan a landing page',
   },
   {
+    id: 'business-websites',
     title: 'Small-business websites',
     position: 'A clear home for your business',
     description: 'A professional multi-page home that helps customers understand your services and get in touch.',
@@ -37,6 +39,7 @@ const offers = [
     cta: 'Plan a business website',
   },
   {
+    id: 'web-applications',
     title: 'Custom web applications',
     position: 'A workflow made usable',
     description: 'A web product for a specific customer or team workflow, scoped from the jobs people need to complete.',
@@ -53,8 +56,12 @@ const offers = [
 export default function Services() {
   return <>
     <PageIntro label="Services" title="The right build. For your next move." text="Choose a focused page, a clear business website, or a custom product shaped around the workflow you need."/>
+    <nav className="service-jump container" aria-label="Explore services">
+      <span>Explore an option</span>
+      {offers.map(offer => <a key={offer.id} href={`#${offer.id}`}>{offer.title}<Arrow/></a>)}
+    </nav>
     <section className="service-details service-offers container" aria-label="Project offers">
-      {offers.map(offer => <article key={offer.title}>
+      {offers.map(offer => <article id={offer.id} key={offer.id}>
         <div className="service-offer-heading">
           <span>{offer.position}</span>
           <h2>{offer.title}</h2>

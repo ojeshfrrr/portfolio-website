@@ -57,6 +57,10 @@
 .service-details h2 { font-size:clamp(30px,3.4vw,48px); }
 .service-details article > div > p { font-size:15px; color:var(--muted); max-width:450px; margin-top:25px; }
 .service-offers article { align-items:start; }
+.service-jump { display:flex; flex-wrap:wrap; align-items:center; gap:12px 26px; padding-bottom:30px; }
+.service-jump > span { color:var(--muted); font-size:13px; }
+.service-jump a { display:inline-flex; align-items:center; gap:8px; min-height:44px; }
+.service-offers article { scroll-margin-top:calc(var(--header-height) + 20px); }
 .service-offer-heading > span { display:block; color:var(--muted); font-size:12px; margin-bottom:12px; }
 .service-offer-heading h2 { text-wrap:balance; }
 .service-offer-heading > p { max-width:440px; color:var(--muted); font-size:14px; margin-top:16px; }

@@ -7,7 +7,7 @@
 .portfolio-list .project-arcus { grid-template-columns: minmax(280px, .75fr) minmax(0, 1.45fr); }
 .portfolio-list .project-arcus .project-visual { order: 2; }
 .portfolio-list .visual-caption { flex-wrap: wrap; gap: 6px; padding-top: 16px; font-size: 12px; }
-.portfolio-list .project-category::before { content: 'Independent project / '; color: var(--text); }
+.portfolio-list .project-kind { color: var(--text); }
 .case-study .case-role { font-size: 13px; }
 .case-study .case-title { margin-top: 40px; }
 .case-metadata { display: flex; flex-wrap: wrap; gap: 26px; border-top: 1px solid var(--border); padding-top: 22px; margin: 32px 0 0; }
