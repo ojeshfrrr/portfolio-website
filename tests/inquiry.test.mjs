@@ -44,3 +44,12 @@ test('origin validation respects the incoming host when Next uses an internal UR
   const req=new Request('http://localhost:3000/api/contact',{method:'POST',headers:{host:'127.0.0.1:3000',origin:'http://127.0.0.1:3000','content-type':'application/json','idempotency-key':'12345678-1234-1234-1234-123456789012'},body:JSON.stringify(payload)});
   assert.equal((await handleContact(req,{},fetch,()=>true)).status,503);
 });
+
+test('production origin validation works behind an HTTPS proxy without trusting spoofed hosts', async()=>{
+  const envWithOrigin={...env,NEXT_PUBLIC_SITE_URL:'https://ovio.portways.app'};
+  const make=(origin,host='internal:3000')=>new Request('http://internal:3000/api/contact',{method:'POST',headers:{host,origin,'content-type':'application/json','idempotency-key':'12345678-1234-1234-1234-123456789012'},body:JSON.stringify(payload)});
+  const send=async()=>Response.json({id:'accepted'});
+  assert.equal((await handleContact(make('https://ovio.portways.app'),envWithOrigin,send,()=>true)).status,200);
+  assert.equal((await handleContact(make('https://evil.example','evil.example'),envWithOrigin,send,()=>true)).status,403);
+  assert.equal((await handleContact(make('https://ovio.portways.app'),{...envWithOrigin,NEXT_PUBLIC_SITE_URL:'not-a-url'},send,()=>true)).status,403);
+});

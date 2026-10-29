@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { prepareBrief } from './brief.mjs';
+import { resolvePublicOrigin } from './seo-config.mjs';
 const maxBytes = 32000;
 const fields = ['name', 'email', 'businessName', 'projectType', 'budget', 'timeline', 'description', 'industry', 'goal', 'features', 'plannerBrief'];
 const required = ['name', 'email', 'projectType', 'description'];
@@ -16,7 +17,8 @@ export function allowInquiry(key, now = Date.now()) {
 export async function handleContact(request, env, send = fetch, allow = allowInquiry) {
   const url = new URL(request.url);
   const host = request.headers.get('host') || url.host;
-  if (request.headers.get('origin') !== `${url.protocol}//${host}`) return reply('Reload the page and try again.', 403);
+  const expectedOrigin = env.NEXT_PUBLIC_SITE_URL ? resolvePublicOrigin(env.NEXT_PUBLIC_SITE_URL) : `${url.protocol}//${host}`;
+  if (!expectedOrigin || request.headers.get('origin') !== expectedOrigin) return reply('Reload the page and try again.', 403);
   if (!(request.headers.get('content-type') || '').startsWith('application/json')) return reply('Use the project enquiry form.', 415);
   if (Number(request.headers.get('content-length')) > maxBytes) return reply('The brief is too large. Shorten it and try again.', 413);
   const reader = request.body?.getReader();
